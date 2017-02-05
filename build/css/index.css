@@ -32,6 +32,38 @@ a {
   a:hover {
     color: #333; }
 
+.container {
+  width: 1220px;
+  margin: 0 auto; }
+
+#header {
+  height: 60px;
+  line-height: 60px;
+  background: #333; }
+  #header .brand {
+    display: inline-block;
+    vertical-align: middle;
+    width: 35px;
+    height: 35px;
+    padding: 0 20px;
+    background: lightcoral; }
+  #header .nav-bar {
+    display: inline-block; }
+    #header .nav-bar > li {
+      display: inline-block;
+      vertical-align: middle; }
+      #header .nav-bar > li > a {
+        font-size: 18px;
+        display: inline-block;
+        padding: 0.5em 1.5em; }
+  #header .user-center {
+    float: right;
+    display: inline-block;
+    vertical-align: middle;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    padding: 0.5em; }
+
 .aside {
   width: 200px;
   height: 100%;
@@ -60,5 +92,24 @@ a {
       line-height: 2em;
       border-bottom: 2px solid #ddd;
       width: 100%; }
+
+.product-item {
+  float: left;
+  margin: 15px;
+  width: 25%;
+  border: 1px solid #ddd;
+  box-shadow: 0 0 10px 10px #ddd; }
+  .product-item .product-img {
+    height: 200px;
+    background: lightseagreen; }
+  .product-item .product-info {
+    padding: 10px;
+    height: 80px;
+    text-align: center;
+    color: #666; }
+    .product-item .product-info span {
+      color: darkred;
+      font-weight: bold;
+      font-size: 24px; }
 
 /*# sourceMappingURL=index.css.map */
