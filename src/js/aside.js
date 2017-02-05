@@ -4,12 +4,6 @@ import {Link} from 'react-router';
 var style = {
   wrapper: {
     float: "left",
-    width: "300px",
-    listStyle: "none",
-  },
-  item: {
-    lineHeight: "30px",
-    border: "2px solid #ddd"
   },
 };
 class Aside extends Component {
@@ -21,11 +15,11 @@ class Aside extends Component {
   }
   render() {
     return (
-      <ul className="aside" style={style.wrapper}>
+      <ul className="aside">
         {
           this.props.asideData.map((item, idx) => {
             return (
-              <li style={style.item}>
+              <li>
                 <Link to={item.dist} key={idx}>{item.name}</Link>
               </li>
             );
