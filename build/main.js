@@ -12391,8 +12391,11 @@ _reactDom2.default.render(_react2.default.createElement(_Header2.default, null),
 _reactDom2.default.render(_react2.default.createElement(
   _reactRouter.Router,
   { history: _reactRouter.hashHistory },
-  _react2.default.createElement('route', { path: '/', component: _home2.default }),
-  _react2.default.createElement('route', { path: '/products', component: _Products2.default })
+  _react2.default.createElement(
+    'route',
+    { path: '/', component: _home2.default },
+    _react2.default.createElement('route', { path: '/products', component: _Products2.default })
+  )
 ), document.getElementById('app'));
 
 /***/ }),
@@ -37103,12 +37106,12 @@ var Header = function (_Component) {
                         null,
                         _react2.default.createElement(
                             'a',
-                            { href: '#/Products' },
+                            { href: '#/' },
                             '\u9996\u9875'
                         ),
                         _react2.default.createElement(
                             'a',
-                            { href: '#' },
+                            { href: '#/Products' },
                             '\u4EA7\u54C1'
                         ),
                         _react2.default.createElement(
@@ -37251,7 +37254,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var asideData = [{ name: "测试1", dist: "/Products" }, { name: "测试2", dist: "/test2" }, { name: "测试3", dist: "/test3" }, { name: "测试4", dist: "/test4" }];
+var asideData = [{ name: "产品", dist: "/Products" }, { name: "特色", dist: "/test2" }, { name: "个人中心", dist: "/test3" }, { name: "促销", dist: "/test4" }];
 
 var Home = function (_Component) {
   _inherits(Home, _Component);

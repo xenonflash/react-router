@@ -74,6 +74,7 @@ a{
 .aside{
     width:200px;
     height:100%;
+    float:left;
     background: #eee;
     border-right: 2px solid #d15d5d;
     > li{ 
@@ -105,6 +106,9 @@ a{
         }
     }
     
+}
+.content{
+    margin-left: 200px;
 }
 .product-item{
     float: left;
