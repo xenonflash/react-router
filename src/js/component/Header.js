@@ -8,8 +8,8 @@ class Header  extends Component {
                 <span className="brand"></span>
                 <ul className="nav-bar">
                     <li>
-                        <a href="#/Products">首页</a>
-                        <a href="#">产品</a>
+                        <a href="#/">首页</a>
+                        <a href="#/Products">产品</a>
                         <a href="#">特色</a>
                         <a href="#">个人</a>
                     </li>

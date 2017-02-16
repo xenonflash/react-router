@@ -10,8 +10,9 @@ import Header from './component/Header';
 ReactDOM.render(<Header/>, document.getElementById('header'));
 ReactDOM.render(
   <Router history={hashHistory}>
-    <route path="/" component={Home}></route>
-    <route path='/products' component={Products}></route>
+    <route path="/" component={Home}>
+      <route path='/products' component={Products}></route>
+    </route>
   </Router>, 
   document.getElementById('app')
 );
