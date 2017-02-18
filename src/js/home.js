@@ -2,10 +2,10 @@ import React, {Component} from 'react';
 import Aside from './component/aside';
 import Search from './component/Search';
 const asideData = [
-  {name: "测试1", dist: "/Products"},
-  {name: "测试2", dist: "/test2"},
-  {name: "测试3", dist: "/test3"},
-  {name: "测试4", dist: "/test4"},
+  {name: "产品", dist: "/Products"},
+  {name: "特色", dist: "/test2"},
+  {name: "个人中心", dist: "/test3"},
+  {name: "促销", dist: "/test4"},
 ];
 
 class Home extends Component{
