@@ -12391,10 +12391,14 @@ _reactDom2.default.render(_react2.default.createElement(_Header2.default, null),
 _reactDom2.default.render(_react2.default.createElement(
   _reactRouter.Router,
   { history: _reactRouter.hashHistory },
+  _react2.default.createElement('route', { path: '/', component: _home2.default }),
   _react2.default.createElement(
     'route',
-    { path: '/', component: _home2.default },
-    _react2.default.createElement('route', { path: '/products', component: _Products2.default })
+    { path: '/products', component: _Products2.default },
+    _react2.default.createElement('route', { path: '/elec' }),
+    _react2.default.createElement('route', { path: '/wood' }),
+    _react2.default.createElement('route', { path: '/art' }),
+    _react2.default.createElement('route', { path: '/hot' })
   )
 ), document.getElementById('app'));
 
@@ -36970,7 +36974,7 @@ module.exports = function (module) {
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -36978,6 +36982,10 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = __webpack_require__(6);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _aside = __webpack_require__(238);
+
+var _aside2 = _interopRequireDefault(_aside);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -36987,70 +36995,73 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var asideData = [{ name: "电器", dist: "/elec" }, { name: "木制", dist: "/wood" }, { name: "艺术", dist: "/art" }, { name: "热销", dist: "/hot" }];
+
 var Products = function (_Component) {
-    _inherits(Products, _Component);
+  _inherits(Products, _Component);
 
-    function Products(props) {
-        _classCallCheck(this, Products);
+  function Products(props) {
+    _classCallCheck(this, Products);
 
-        var _this = _possibleConstructorReturn(this, (Products.__proto__ || Object.getPrototypeOf(Products)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Products.__proto__ || Object.getPrototypeOf(Products)).call(this, props));
 
-        _this.state = {
-            product: []
-        };
-        return _this;
+    _this.state = {
+      product: []
+    };
+    return _this;
+  }
+
+  _createClass(Products, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      this.setState({
+        product: [{ id: 'asgfhd', name: '台灯', desc: 'assdafasfsdfsafsdf', price: 20 }, { id: 'atryhg', name: '电扇', desc: 'assdafasfsdfsafsdf', price: 80 }, { id: '5dfgdf', name: '房子', desc: 'assdafasfsdfsafsdf', price: 234 }, { id: 'vcbhdf', name: '手机', desc: 'assdafasfsdfsafsdf', price: 32423 }, { id: 'acxsds', name: '电脑', desc: 'assdafasfsdfsafsdf', price: 222 }, { id: 'bdrdgd', name: '桌子', desc: 'assdafasfsdfsafsdf', price: 674 }]
+      });
     }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'container' },
+        _react2.default.createElement(
+          'h1',
+          null,
+          '\u8FD9\u662F\u4EA7\u54C1\u9875\u9762'
+        ),
+        _react2.default.createElement('hr', null),
+        _react2.default.createElement(_aside2.default, { asideData: asideData }),
+        this.state.product.map(function (item) {
+          return _react2.default.createElement(
+            'div',
+            { className: 'product-item' },
+            _react2.default.createElement('div', { className: 'product-img' }),
+            _react2.default.createElement(
+              'div',
+              { className: 'product-info' },
+              _react2.default.createElement(
+                'h3',
+                { className: 'product-name' },
+                item.name
+              ),
+              _react2.default.createElement(
+                'p',
+                { className: 'product-desc' },
+                item.desc
+              ),
+              _react2.default.createElement(
+                'span',
+                null,
+                item.price
+              )
+            )
+          );
+        })
+      );
+    }
+  }]);
 
-    _createClass(Products, [{
-        key: 'componentWillMount',
-        value: function componentWillMount() {
-            this.setState({
-                product: [{ id: 'asgfhd', name: '台灯', desc: 'assdafasfsdfsafsdf', price: 20 }, { id: 'atryhg', name: '电扇', desc: 'assdafasfsdfsafsdf', price: 80 }, { id: '5dfgdf', name: '房子', desc: 'assdafasfsdfsafsdf', price: 234 }, { id: 'vcbhdf', name: '手机', desc: 'assdafasfsdfsafsdf', price: 32423 }, { id: 'acxsds', name: '电脑', desc: 'assdafasfsdfsafsdf', price: 222 }, { id: 'bdrdgd', name: '桌子', desc: 'assdafasfsdfsafsdf', price: 674 }]
-            });
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement(
-                'div',
-                { className: 'container' },
-                _react2.default.createElement(
-                    'h1',
-                    null,
-                    '\u8FD9\u662F\u4EA7\u54C1\u9875\u9762'
-                ),
-                _react2.default.createElement('hr', null),
-                this.state.product.map(function (item) {
-                    return _react2.default.createElement(
-                        'div',
-                        { className: 'product-item' },
-                        _react2.default.createElement('div', { className: 'product-img' }),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'product-info' },
-                            _react2.default.createElement(
-                                'h3',
-                                { className: 'product-name' },
-                                item.name
-                            ),
-                            _react2.default.createElement(
-                                'p',
-                                { className: 'product-desc' },
-                                item.desc
-                            ),
-                            _react2.default.createElement(
-                                'span',
-                                null,
-                                item.price
-                            )
-                        )
-                    );
-                })
-            );
-        }
-    }]);
-
-    return Products;
+  return Products;
 }(_react.Component);
 
 exports.default = Products;
@@ -37238,10 +37249,6 @@ var _react = __webpack_require__(6);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _aside = __webpack_require__(238);
-
-var _aside2 = _interopRequireDefault(_aside);
-
 var _Search = __webpack_require__(111);
 
 var _Search2 = _interopRequireDefault(_Search);
@@ -37253,8 +37260,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var asideData = [{ name: "产品", dist: "/Products" }, { name: "特色", dist: "/test2" }, { name: "个人中心", dist: "/test3" }, { name: "促销", dist: "/test4" }];
 
 var Home = function (_Component) {
   _inherits(Home, _Component);
@@ -37277,7 +37282,6 @@ var Home = function (_Component) {
           'this is home page'
         ),
         _react2.default.createElement(_Search2.default, { placeholder: '\u968F\u4FBF' }),
-        _react2.default.createElement(_aside2.default, { asideData: asideData }),
         this.props.children
       );
     }
