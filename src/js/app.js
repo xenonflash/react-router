@@ -6,6 +6,7 @@ import {Link, Router, route, hashHistory} from 'react-router';
 import Home from './home';
 import Products from './Products';
 import Header from './component/Header';
+import '../css/index.scss';
 
 ReactDOM.render(<Header/>, document.getElementById('header'));
 ReactDOM.render(
