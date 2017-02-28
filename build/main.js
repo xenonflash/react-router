@@ -1836,11 +1836,10 @@ function _interopRequireDefault(obj) {
 }
 
 var addQueryStringValueToPath = exports.addQueryStringValueToPath = function addQueryStringValueToPath(path, key, value) {
-  var _parsePath = parsePath(path);
-
-  var pathname = _parsePath.pathname;
-  var search = _parsePath.search;
-  var hash = _parsePath.hash;
+  var _parsePath = parsePath(path),
+      pathname = _parsePath.pathname,
+      search = _parsePath.search,
+      hash = _parsePath.hash;
 
   return createPath({
     pathname: pathname,
@@ -1850,11 +1849,10 @@ var addQueryStringValueToPath = exports.addQueryStringValueToPath = function add
 };
 
 var stripQueryStringValueFromPath = exports.stripQueryStringValueFromPath = function stripQueryStringValueFromPath(path, key) {
-  var _parsePath2 = parsePath(path);
-
-  var pathname = _parsePath2.pathname;
-  var search = _parsePath2.search;
-  var hash = _parsePath2.hash;
+  var _parsePath2 = parsePath(path),
+      pathname = _parsePath2.pathname,
+      search = _parsePath2.search,
+      hash = _parsePath2.hash;
 
   return createPath({
     pathname: pathname,
@@ -1866,9 +1864,8 @@ var stripQueryStringValueFromPath = exports.stripQueryStringValueFromPath = func
 };
 
 var getQueryStringValueFromPath = exports.getQueryStringValueFromPath = function getQueryStringValueFromPath(path, key) {
-  var _parsePath3 = parsePath(path);
-
-  var search = _parsePath3.search;
+  var _parsePath3 = parsePath(path),
+      search = _parsePath3.search;
 
   var match = search.match(new RegExp('[?&]' + key + '=([a-zA-Z0-9]+)'));
   return match && match[1];
@@ -1910,10 +1907,10 @@ var parsePath = exports.parsePath = function parsePath(path) {
 var createPath = exports.createPath = function createPath(location) {
   if (location == null || typeof location === 'string') return location;
 
-  var basename = location.basename;
-  var pathname = location.pathname;
-  var search = location.search;
-  var hash = location.hash;
+  var basename = location.basename,
+      pathname = location.pathname,
+      search = location.search,
+      hash = location.hash;
 
   var path = (basename || '') + pathname;
 
@@ -2835,7 +2832,7 @@ exports.locationsAreEqual = exports.statesAreEqual = exports.createLocation = ex
 var _typeof = typeof Symbol === "function" && _typeof2(Symbol.iterator) === "symbol" ? function (obj) {
   return typeof obj === "undefined" ? "undefined" : _typeof2(obj);
 } : function (obj) {
-  return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof2(obj);
+  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof2(obj);
 };
 
 var _extends = Object.assign || function (target) {
@@ -2869,9 +2866,9 @@ var createQuery = exports.createQuery = function createQuery(props) {
 };
 
 var createLocation = exports.createLocation = function createLocation() {
-  var input = arguments.length <= 0 || arguments[0] === undefined ? '/' : arguments[0];
-  var action = arguments.length <= 1 || arguments[1] === undefined ? _Actions.POP : arguments[1];
-  var key = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
+  var input = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '/';
+  var action = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _Actions.POP;
+  var key = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
 
   var object = typeof input === 'string' ? (0, _PathUtils.parsePath)(input) : input;
 
@@ -4308,6 +4305,15 @@ var supportsPopstateOnHashchange = exports.supportsPopstateOnHashchange = functi
   return window.navigator.userAgent.indexOf('Trident') === -1;
 };
 
+/**
+ * Returns true if a given popstate event is an extraneous WebKit event.
+ * Accounts for the fact that Chrome on iOS fires real popstate events
+ * containing undefined state when pressing the back button.
+ */
+var isExtraneousPopstateEvent = exports.isExtraneousPopstateEvent = function isExtraneousPopstateEvent(event) {
+  return event.state === undefined && navigator.userAgent.indexOf('CriOS') === -1;
+};
+
 /***/ }),
 /* 36 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -5571,8 +5577,9 @@ var getUserConfirmation = exports.getUserConfirmation = function getUserConfirma
 
 var startListener = exports.startListener = function startListener(listener) {
   var handlePopState = function handlePopState(event) {
-    if (event.state !== undefined) // Ignore extraneous popstate events in WebKit
-      listener(_createLocation(event.state));
+    if ((0, _DOMUtils.isExtraneousPopstateEvent)(event)) // Ignore extraneous popstate events in WebKit
+      return;
+    listener(_createLocation(event.state));
   };
 
   (0, _DOMUtils.addEventListener)(window, PopStateEvent, handlePopState);
@@ -5595,8 +5602,8 @@ var startListener = exports.startListener = function startListener(listener) {
 };
 
 var updateLocation = function updateLocation(location, updateState) {
-  var state = location.state;
-  var key = location.key;
+  var state = location.state,
+      key = location.key;
 
   if (state !== undefined) (0, _DOMStateStorage.saveState)(key, state);
 
@@ -5655,13 +5662,13 @@ function _interopRequireDefault(obj) {
 }
 
 var createHistory = function createHistory() {
-  var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-  var getCurrentLocation = options.getCurrentLocation;
-  var getUserConfirmation = options.getUserConfirmation;
-  var pushLocation = options.pushLocation;
-  var replaceLocation = options.replaceLocation;
-  var go = options.go;
-  var keyLength = options.keyLength;
+  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var getCurrentLocation = options.getCurrentLocation,
+      getUserConfirmation = options.getUserConfirmation,
+      pushLocation = options.pushLocation,
+      replaceLocation = options.replaceLocation,
+      go = options.go,
+      keyLength = options.keyLength;
 
   var currentLocation = void 0;
   var pendingLocation = void 0;
@@ -5789,7 +5796,7 @@ var createHistory = function createHistory() {
   };
 
   var createLocation = function createLocation(location, action) {
-    var key = arguments.length <= 2 || arguments[2] === undefined ? createKey() : arguments[2];
+    var key = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : createKey();
     return (0, _LocationUtils.createLocation)(location, action, key);
   };
 
@@ -8761,7 +8768,7 @@ function _interopRequireDefault(obj) {
 
 var useBasename = function useBasename(createHistory) {
   return function () {
-    var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
     var history = createHistory(options);
     var basename = options.basename;
@@ -8770,7 +8777,7 @@ var useBasename = function useBasename(createHistory) {
       if (!location) return location;
 
       if (basename && location.basename == null) {
-        if (location.pathname.indexOf(basename) === 0) {
+        if (location.pathname.toLowerCase().indexOf(basename.toLowerCase()) === 0) {
           location.pathname = location.pathname.substring(basename.length);
           location.basename = basename;
 
@@ -8899,11 +8906,11 @@ var defaultParseQueryString = _queryString.parse;
  */
 var useQueries = function useQueries(createHistory) {
   return function () {
-    var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
     var history = createHistory(options);
-    var stringifyQuery = options.stringifyQuery;
-    var parseQueryString = options.parseQueryString;
+    var stringifyQuery = options.stringifyQuery,
+        parseQueryString = options.parseQueryString;
 
     if (typeof stringifyQuery !== 'function') stringifyQuery = defaultStringifyQuery;
 
@@ -12385,16 +12392,22 @@ var _Header = __webpack_require__(237);
 
 var _Header2 = _interopRequireDefault(_Header);
 
+__webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../css/index.scss\""); e.code = 'MODULE_NOT_FOUND';; throw e; }()));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _reactDom2.default.render(_react2.default.createElement(_Header2.default, null), document.getElementById('header'));
 _reactDom2.default.render(_react2.default.createElement(
   _reactRouter.Router,
   { history: _reactRouter.hashHistory },
+  _react2.default.createElement('route', { path: '/', component: _home2.default }),
   _react2.default.createElement(
     'route',
-    { path: '/', component: _home2.default },
-    _react2.default.createElement('route', { path: '/products', component: _Products2.default })
+    { path: '/products', component: _Products2.default },
+    _react2.default.createElement('route', { path: '/elec' }),
+    _react2.default.createElement('route', { path: '/wood' }),
+    _react2.default.createElement('route', { path: '/art' }),
+    _react2.default.createElement('route', { path: '/hot' })
   )
 ), document.getElementById('app'));
 
@@ -13314,8 +13327,8 @@ var startListener = exports.startListener = function startListener(listener, pat
 };
 
 var updateLocation = function updateLocation(location, pathCoder, queryKey, updateHash) {
-  var state = location.state;
-  var key = location.key;
+  var state = location.state,
+      key = location.key;
 
   var path = pathCoder.encodePath((0, _PathUtils.createPath)(location));
 
@@ -13455,18 +13468,18 @@ function _interopRequireDefault(obj) {
  * behavior using { forceRefresh: true } in options.
  */
 var createBrowserHistory = function createBrowserHistory() {
-  var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
   !_ExecutionEnvironment.canUseDOM ? process.env.NODE_ENV !== 'production' ? (0, _invariant2.default)(false, 'Browser history needs a DOM') : (0, _invariant2.default)(false) : void 0;
 
   var useRefresh = options.forceRefresh || !(0, _DOMUtils.supportsHistory)();
   var Protocol = useRefresh ? RefreshProtocol : BrowserProtocol;
 
-  var getUserConfirmation = Protocol.getUserConfirmation;
-  var getCurrentLocation = Protocol.getCurrentLocation;
-  var pushLocation = Protocol.pushLocation;
-  var replaceLocation = Protocol.replaceLocation;
-  var go = Protocol.go;
+  var getUserConfirmation = Protocol.getUserConfirmation,
+      getCurrentLocation = Protocol.getCurrentLocation,
+      pushLocation = Protocol.pushLocation,
+      replaceLocation = Protocol.replaceLocation,
+      go = Protocol.go;
 
   var history = (0, _createHistory2.default)(_extends({
     getUserConfirmation: getUserConfirmation }, options, {
@@ -13591,12 +13604,12 @@ var HashPathCoders = {
 };
 
 var createHashHistory = function createHashHistory() {
-  var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
   !_ExecutionEnvironment.canUseDOM ? process.env.NODE_ENV !== 'production' ? (0, _invariant2.default)(false, 'Hash history needs a DOM') : (0, _invariant2.default)(false) : void 0;
 
-  var queryKey = options.queryKey;
-  var hashType = options.hashType;
+  var queryKey = options.queryKey,
+      hashType = options.hashType;
 
   process.env.NODE_ENV !== 'production' ? (0, _warning2.default)(queryKey !== false, 'Using { queryKey: false } no longer works. Instead, just don\'t ' + 'use location state if you don\'t want a key in your URL query string') : void 0;
 
@@ -13731,7 +13744,7 @@ var createStateStorage = function createStateStorage(entries) {
 };
 
 var createMemoryHistory = function createMemoryHistory() {
-  var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
   if (Array.isArray(options)) {
     options = { entries: options };
@@ -13798,9 +13811,9 @@ var createMemoryHistory = function createMemoryHistory() {
     go: go
   }));
 
-  var _options = options;
-  var entries = _options.entries;
-  var current = _options.current;
+  var _options = options,
+      entries = _options.entries,
+      current = _options.current;
 
   if (typeof entries === 'string') {
     entries = [entries];
@@ -23730,9 +23743,9 @@ function parserForArrayFormat(opts) {
 	switch (opts.arrayFormat) {
 		case 'index':
 			return function (key, value, accumulator) {
-				result = /\[(\d*)]$/.exec(key);
+				result = /\[(\d*)\]$/.exec(key);
 
-				key = key.replace(/\[\d*]$/, '');
+				key = key.replace(/\[\d*\]$/, '');
 
 				if (!result) {
 					accumulator[key] = value;
@@ -23748,9 +23761,9 @@ function parserForArrayFormat(opts) {
 
 		case 'bracket':
 			return function (key, value, accumulator) {
-				result = /(\[])$/.exec(key);
+				result = /(\[\])$/.exec(key);
 
-				key = key.replace(/\[]$/, '');
+				key = key.replace(/\[\]$/, '');
 
 				if (!result || accumulator[key] === undefined) {
 					accumulator[key] = value;
@@ -36970,7 +36983,7 @@ module.exports = function (module) {
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -36978,6 +36991,10 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = __webpack_require__(6);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _aside = __webpack_require__(238);
+
+var _aside2 = _interopRequireDefault(_aside);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -36987,70 +37004,73 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var asideData = [{ name: "电器", dist: "/elec" }, { name: "木制", dist: "/wood" }, { name: "艺术", dist: "/art" }, { name: "热销", dist: "/hot" }];
+
 var Products = function (_Component) {
-    _inherits(Products, _Component);
+  _inherits(Products, _Component);
 
-    function Products(props) {
-        _classCallCheck(this, Products);
+  function Products(props) {
+    _classCallCheck(this, Products);
 
-        var _this = _possibleConstructorReturn(this, (Products.__proto__ || Object.getPrototypeOf(Products)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Products.__proto__ || Object.getPrototypeOf(Products)).call(this, props));
 
-        _this.state = {
-            product: []
-        };
-        return _this;
+    _this.state = {
+      product: []
+    };
+    return _this;
+  }
+
+  _createClass(Products, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      this.setState({
+        product: [{ id: 'asgfhd', name: '台灯', desc: 'assdafasfsdfsafsdf', price: 20 }, { id: 'atryhg', name: '电扇', desc: 'assdafasfsdfsafsdf', price: 80 }, { id: '5dfgdf', name: '房子', desc: 'assdafasfsdfsafsdf', price: 234 }, { id: 'vcbhdf', name: '手机', desc: 'assdafasfsdfsafsdf', price: 32423 }, { id: 'acxsds', name: '电脑', desc: 'assdafasfsdfsafsdf', price: 222 }, { id: 'bdrdgd', name: '桌子', desc: 'assdafasfsdfsafsdf', price: 674 }]
+      });
     }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'container' },
+        _react2.default.createElement(
+          'h1',
+          null,
+          '\u8FD9\u662F\u4EA7\u54C1\u9875\u9762'
+        ),
+        _react2.default.createElement('hr', null),
+        _react2.default.createElement(_aside2.default, { asideData: asideData }),
+        this.state.product.map(function (item) {
+          return _react2.default.createElement(
+            'div',
+            { className: 'product-item' },
+            _react2.default.createElement('div', { className: 'product-img' }),
+            _react2.default.createElement(
+              'div',
+              { className: 'product-info' },
+              _react2.default.createElement(
+                'h3',
+                { className: 'product-name' },
+                item.name
+              ),
+              _react2.default.createElement(
+                'p',
+                { className: 'product-desc' },
+                item.desc
+              ),
+              _react2.default.createElement(
+                'span',
+                null,
+                item.price
+              )
+            )
+          );
+        })
+      );
+    }
+  }]);
 
-    _createClass(Products, [{
-        key: 'componentWillMount',
-        value: function componentWillMount() {
-            this.setState({
-                product: [{ id: 'asgfhd', name: '台灯', desc: 'assdafasfsdfsafsdf', price: 20 }, { id: 'atryhg', name: '电扇', desc: 'assdafasfsdfsafsdf', price: 80 }, { id: '5dfgdf', name: '房子', desc: 'assdafasfsdfsafsdf', price: 234 }, { id: 'vcbhdf', name: '手机', desc: 'assdafasfsdfsafsdf', price: 32423 }, { id: 'acxsds', name: '电脑', desc: 'assdafasfsdfsafsdf', price: 222 }, { id: 'bdrdgd', name: '桌子', desc: 'assdafasfsdfsafsdf', price: 674 }]
-            });
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement(
-                'div',
-                { className: 'container' },
-                _react2.default.createElement(
-                    'h1',
-                    null,
-                    '\u8FD9\u662F\u4EA7\u54C1\u9875\u9762'
-                ),
-                _react2.default.createElement('hr', null),
-                this.state.product.map(function (item) {
-                    return _react2.default.createElement(
-                        'div',
-                        { className: 'product-item' },
-                        _react2.default.createElement('div', { className: 'product-img' }),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'product-info' },
-                            _react2.default.createElement(
-                                'h3',
-                                { className: 'product-name' },
-                                item.name
-                            ),
-                            _react2.default.createElement(
-                                'p',
-                                { className: 'product-desc' },
-                                item.desc
-                            ),
-                            _react2.default.createElement(
-                                'span',
-                                null,
-                                item.price
-                            )
-                        )
-                    );
-                })
-            );
-        }
-    }]);
-
-    return Products;
+  return Products;
 }(_react.Component);
 
 exports.default = Products;
@@ -37238,10 +37258,6 @@ var _react = __webpack_require__(6);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _aside = __webpack_require__(238);
-
-var _aside2 = _interopRequireDefault(_aside);
-
 var _Search = __webpack_require__(111);
 
 var _Search2 = _interopRequireDefault(_Search);
@@ -37253,8 +37269,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var asideData = [{ name: "产品", dist: "/Products" }, { name: "特色", dist: "/test2" }, { name: "个人中心", dist: "/test3" }, { name: "促销", dist: "/test4" }];
 
 var Home = function (_Component) {
   _inherits(Home, _Component);
@@ -37277,7 +37291,6 @@ var Home = function (_Component) {
           'this is home page'
         ),
         _react2.default.createElement(_Search2.default, { placeholder: '\u968F\u4FBF' }),
-        _react2.default.createElement(_aside2.default, { asideData: asideData }),
         this.props.children
       );
     }
