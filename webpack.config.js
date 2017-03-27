@@ -1,13 +1,13 @@
 var webapck = require('webpack');
 
 module.exports = {
-  entry: [
-    './src/js/app.js'
-  ],
+  entry: {
+      app: './src/js/app.js'
+  },
   output: {
     path: './build/',
     publicPath: './build/',
-    filename: '[name].js?',
+    filename: '[name].js',
   },
   module: {
     loaders: [
@@ -21,7 +21,7 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        loader: 'style!css!sass',
+        loaders: ['style-loader', 'css-loader', 'sass-loader'],
       },
     ],
   },
